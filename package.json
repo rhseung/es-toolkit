@@ -9,10 +9,6 @@
     "url": "https://github.com/toss/es-toolkit.git"
   },
   "license": "MIT",
-  "workspaces": [
-    "docs",
-    "benchmarks"
-  ],
   "packageManager": "yarn@4.2.2",
   "exports": {
     ".": "./src/index.ts",
@@ -170,5 +166,12 @@
     "lint": "eslint --config eslint.config.mjs",
     "format": "prettier --write .",
     "transform": "jscodeshift -t ./.scripts/tests/transform-lodash-test.ts $0 && prettier --write $0"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-named-capturing-groups-regex": "^7.24.7",
+    "@babel/preset-env": "^7.25.4",
+    "@rollup/plugin-babel": "^6.0.4",
+    "babel-plugin-object-values-to-object-keys": "^1.0.2",
+    "babel-plugin-transform-es2017-object-entries": "^0.0.5"
   }
 }

@@ -6,6 +6,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import terserPlugin from '@rollup/plugin-terser';
 import tsPlugin from '@rollup/plugin-typescript';
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 import dtsPlugin from 'rollup-plugin-dts';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -64,7 +65,7 @@ export default () => {
  * }) => import('rollup').RollupOptions}
  */
 function libBuildOptions({ entrypoints, extension, format, outDir, sourcemap }) {
-  const isESM = format === 'esm';
+  const isCJS = format === 'cjs';
 
   return {
     input: mapInputs(entrypoints),
@@ -78,6 +79,18 @@ function libBuildOptions({ entrypoints, extension, format, outDir, sourcemap }) 
           declaration: false,
         },
       }),
+      ...(isCJS
+        ? [
+            getBabelOutputPlugin({
+              presets: ['@babel/preset-env'],
+              plugins: [
+                '@babel/plugin-transform-named-capturing-groups-regex',
+                'babel-plugin-object-values-to-object-keys',
+                'transform-es2017-object-entries',
+              ],
+            }),
+          ]
+        : []),
     ],
     output: {
       format,
@@ -85,9 +98,9 @@ function libBuildOptions({ entrypoints, extension, format, outDir, sourcemap }) 
       ...fileNames(extension),
       // Using preserveModules disables bundling and the creation of chunks,
       // leading to a result that is a mirror of the input module graph.
-      preserveModules: isESM,
+      preserveModules: isCJS,
       sourcemap,
-      generatedCode: 'es2015',
+      generatedCode: 'es5',
       // Hoisting transitive imports adds bare imports in modules,
       // which can make imports by JS runtimes slightly faster,
       // but makes the generated code harder to follow.
@@ -118,7 +131,7 @@ function browserBuildConfig({ inputFile, outFile, name, sourcemap }) {
         // Minify with terser, but with a configuration that optimizes for
         // readability in browser DevTools (after re-indenting by DevTools).
         terserPlugin({
-          // Terser defaults to ES5 for syntax it adds or rewrites
+          // Terser defaults to es5 for syntax it adds or rewrites
           ecma: 2020,
           // Readable function names (not just in final export)
           keep_fnames: true,
@@ -132,7 +145,7 @@ function browserBuildConfig({ inputFile, outFile, name, sourcemap }) {
       name,
       file: outFile,
       sourcemap,
-      generatedCode: 'es2015',
+      generatedCode: 'es5',
     },
   };
 }
@@ -148,7 +161,7 @@ function declarationOptions({ entrypoints, outDir }) {
       {
         format: 'esm',
         dir: outDir,
-        generatedCode: 'es2015',
+        generatedCode: 'es5',
         ...fileNames('d.mts'),
         preserveModules: true,
         preserveModulesRoot: 'src',
@@ -156,7 +169,7 @@ function declarationOptions({ entrypoints, outDir }) {
       {
         format: 'cjs',
         dir: outDir,
-        generatedCode: 'es2015',
+        generatedCode: 'es5',
         ...fileNames('d.ts'),
         preserveModules: true,
         preserveModulesRoot: 'src',
