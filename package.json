@@ -160,7 +160,7 @@
   "sideEffects": false,
   "scripts": {
     "prepack": "yarn build",
-    "build": "rollup -c rollup.config.mjs && ./.scripts/postbuild.sh",
+    "build": "rollup -c rollup.config.mjs && python scripts/make_zip.py",
     "test": "vitest run --coverage --typecheck",
     "bench": "vitest bench",
     "lint": "eslint --config eslint.config.mjs",
