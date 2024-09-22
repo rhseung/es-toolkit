@@ -1,0 +1,22 @@
+'use strict';
+
+var clamp = require('./clamp.js');
+var inRange = require('./inRange.js');
+var mean = require('./mean.js');
+var meanBy = require('./meanBy.js');
+var random = require('./random.js');
+var randomInt = require('./randomInt.js');
+var round = require('./round.js');
+var sum = require('./sum.js');
+var sumBy = require('./sumBy.js');
+var range = require('./range.js');
+exports.clamp = clamp.clamp;
+exports.inRange = inRange.inRange;
+exports.mean = mean.mean;
+exports.meanBy = meanBy.meanBy;
+exports.random = random.random;
+exports.randomInt = randomInt.randomInt;
+exports.round = round.round;
+exports.sum = sum.sum;
+exports.sumBy = sumBy.sumBy;
+exports.range = range.range;
