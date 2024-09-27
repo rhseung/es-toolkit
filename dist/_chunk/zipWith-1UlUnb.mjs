@@ -25,7 +25,8 @@ function chunk(arr, size) {
 
 function compact(arr) {
     const result = [];
-    for (const item of arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
         if (item) {
             result.push(item);
         }
@@ -35,7 +36,8 @@ function compact(arr) {
 
 function countBy(arr, mapper) {
     const result = {};
-    for (const item of arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
         const key = mapper(item);
         result[key] = (result[key] ?? 0) + 1;
     }
@@ -101,7 +103,8 @@ function flatten(arr, depth = 1) {
     const result = [];
     const flooredDepth = Math.floor(depth);
     const recursive = (arr, currentDepth) => {
-        for (const item of arr) {
+        for (let i = 0; i < arr.length; i++) {
+            const item = arr[i];
             if (Array.isArray(item) && currentDepth < flooredDepth) {
                 recursive(item, currentDepth + 1);
             }
@@ -135,7 +138,8 @@ function forEachRight(arr, callback) {
 
 function groupBy(arr, getKeyFromItem) {
     const result = Object.create(null);
-    for (const item of arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
         const key = getKeyFromItem(item);
         if (result[key] == null) {
             result[key] = [];
@@ -179,7 +183,8 @@ function isSubset(superset, subset) {
 
 function keyBy(arr, getKeyFromItem) {
     const result = {};
-    for (const item of arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
         const key = getKeyFromItem(item);
         result[key] = item;
     }
@@ -193,7 +198,8 @@ function last(arr) {
 function maxBy(items, getValue) {
     let maxElement = items[0];
     let max = -Infinity;
-    for (const element of items) {
+    for (let i = 0; i < items.length; i++) {
+        const element = items[i];
         const value = getValue(element);
         if (value > max) {
             max = value;
@@ -206,7 +212,8 @@ function maxBy(items, getValue) {
 function minBy(items, getValue) {
     let minElement = items[0];
     let min = Infinity;
-    for (const element of items) {
+    for (let i = 0; i < items.length; i++) {
+        const element = items[i];
         const value = getValue(element);
         if (value < min) {
             min = value;
@@ -219,7 +226,8 @@ function minBy(items, getValue) {
 function partition(arr, isInTruthy) {
     const truthy = [];
     const falsy = [];
-    for (const item of arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
         if (isInTruthy(item)) {
             truthy.push(item);
         }
@@ -296,7 +304,8 @@ function takeRightWhile(arr, shouldContinueTaking) {
 
 function takeWhile(arr, shouldContinueTaking) {
     const result = [];
-    for (const item of arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
         if (!shouldContinueTaking(item)) {
             break;
         }
@@ -326,7 +335,9 @@ function union(arr1, arr2) {
 
 function unionBy(arr1, arr2, mapper) {
     const map = new Map();
-    for (const item of [...arr1, ...arr2]) {
+    const items = [...arr1, ...arr2];
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
         const key = mapper(item);
         if (!map.has(key)) {
             map.set(key, item);
@@ -337,7 +348,8 @@ function unionBy(arr1, arr2, mapper) {
 
 function uniqWith(arr, areItemsEqual) {
     const result = [];
-    for (const item of arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
         const isUniq = result.every(v => !areItemsEqual(v, item));
         if (isUniq) {
             result.push(item);
@@ -352,7 +364,8 @@ function unionWith(arr1, arr2, areItemsEqual) {
 
 function uniqBy(arr, mapper) {
     const map = new Map();
-    for (const item of arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
         const key = mapper(item);
         if (!map.has(key)) {
             map.set(key, item);

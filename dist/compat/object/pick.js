@@ -12,11 +12,8 @@ function pick(obj) {
     return {};
   }
   var result = {};
-  for (var _len = arguments.length, keysArr = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    keysArr[_key - 1] = arguments[_key];
-  }
-  for (var _i = 0, _keysArr = keysArr; _i < _keysArr.length; _i++) {
-    var keys = _keysArr[_i];
+  for (var i = 0; i < (arguments.length <= 1 ? 0 : arguments.length - 1); i++) {
+    var keys = i + 1 < 1 || arguments.length <= i + 1 ? undefined : arguments[i + 1];
     switch (_typeof(keys)) {
       case 'object':
         {

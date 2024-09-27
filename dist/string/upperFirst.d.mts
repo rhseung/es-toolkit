@@ -5,9 +5,9 @@
  * @returns {string} - The converted string.
  *
  * @example
- * const convertedStr1 = upperCase('fred') // returns 'fred'
- * const convertedStr2 = upperCase('Fred') // returns 'Fred'
- * const convertedStr3 = upperCase('FRED') // returns 'FRED'
+ * const convertedStr1 = upperFirst('fred') // returns 'Fred'
+ * const convertedStr2 = upperFirst('Fred') // returns 'Fred'
+ * const convertedStr3 = upperFirst('FRED') // returns 'FRED'
  */
 declare function upperFirst(str: string): string;
 

@@ -2,22 +2,24 @@ import { b as isPrimitive, a as isTypedArray, i as isPlainObject } from './isPla
 
 function omitBy(obj, shouldOmit) {
     const result = {};
-    for (const [key, value] of Object.entries(obj)) {
-        if (shouldOmit(value, key)) {
-            continue;
+    const objEntries = Object.entries(obj);
+    for (let i = 0; i < objEntries.length; i++) {
+        const [key, value] = objEntries[i];
+        if (!shouldOmit(value, key)) {
+            result[key] = value;
         }
-        result[key] = value;
     }
     return result;
 }
 
 function pickBy(obj, shouldPick) {
     const result = {};
-    for (const [key, value] of Object.entries(obj)) {
-        if (!shouldPick(value, key)) {
-            continue;
+    const objEntries = Object.entries(obj);
+    for (let i = 0; i < objEntries.length; i++) {
+        const [key, value] = objEntries[i];
+        if (shouldPick(value, key)) {
+            result[key] = value;
         }
-        result[key] = value;
     }
     return result;
 }
@@ -37,7 +39,10 @@ function clone(obj) {
     if (isPrimitive(obj)) {
         return obj;
     }
-    if (Array.isArray(obj) || isTypedArray(obj) || obj instanceof ArrayBuffer || obj instanceof SharedArrayBuffer) {
+    if (Array.isArray(obj) ||
+        isTypedArray(obj) ||
+        obj instanceof ArrayBuffer ||
+        (typeof SharedArrayBuffer !== 'undefined' && obj instanceof SharedArrayBuffer)) {
         return obj.slice(0);
     }
     const prototype = Object.getPrototypeOf(obj);

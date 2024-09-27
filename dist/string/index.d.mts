@@ -6,6 +6,7 @@ export { lowerCase } from './lowerCase.mjs';
 export { startCase } from './startCase.mjs';
 export { capitalize } from './capitalize.mjs';
 export { pascalCase } from './pascalCase.mjs';
+export { constantCase } from './constantCase.mjs';
 export { trim } from './trim.mjs';
 export { trimStart } from './trimStart.mjs';
 export { trimEnd } from './trimEnd.mjs';

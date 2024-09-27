@@ -8,8 +8,9 @@ function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function unionBy(arr1, arr2, mapper) {
   var map = new Map();
-  for (var _i = 0, _arr = [].concat(_toConsumableArray(arr1), _toConsumableArray(arr2)); _i < _arr.length; _i++) {
-    var item = _arr[_i];
+  var items = [].concat(_toConsumableArray(arr1), _toConsumableArray(arr2));
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
     var key = mapper(item);
     if (!map.has(key)) {
       map.set(key, item);

@@ -1,5 +1,7 @@
 export { isDate } from './isDate.mjs';
 export { isEqual } from './isEqual.mjs';
+export { isError } from './isError.mjs';
+export { isMap } from './isMap.mjs';
 export { isNil } from './isNil.mjs';
 export { isNotNil } from './isNotNil.mjs';
 export { isNull } from './isNull.mjs';
@@ -13,5 +15,6 @@ export { isRegExp } from './isRegExp.mjs';
 export { isBoolean } from './isBoolean.mjs';
 export { isSymbol } from './isSymbol.mjs';
 export { isString } from './isString.mjs';
+export { isSet } from './isSet.mjs';
 export { isWeakMap } from './isWeakMap.mjs';
 export { isWeakSet } from './isWeakSet.mjs';

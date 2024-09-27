@@ -212,6 +212,10 @@ function areObjectsEqual(a, b, stack) {
     }
 }
 
+function isMap(value) {
+    return value instanceof Map;
+}
+
 function isNil(x) {
     return x == null;
 }
@@ -236,6 +240,14 @@ function isFunction(value) {
     return typeof value === 'function';
 }
 
+function isRegExp(value) {
+    return value instanceof RegExp;
+}
+
+function isSet(value) {
+    return value instanceof Set;
+}
+
 function isWeakMap(value) {
     return value instanceof WeakMap;
 }
@@ -244,4 +256,4 @@ function isWeakSet(value) {
     return value instanceof WeakSet;
 }
 
-export { isEqual as a, isNil as b, isNotNil as c, isNull as d, isUndefined as e, isLength as f, isFunction as g, isWeakMap as h, isDate as i, isWeakSet as j, argumentsTag as k, booleanTag as l, getTag as m, numberTag as n, getSymbols as o, stringTag as s };
+export { isEqual as a, isMap as b, isNil as c, isNotNil as d, isNull as e, isUndefined as f, isLength as g, isFunction as h, isDate as i, isRegExp as j, isSet as k, isWeakMap as l, isWeakSet as m, argumentsTag as n, booleanTag as o, numberTag as p, getTag as q, getSymbols as r, stringTag as s };

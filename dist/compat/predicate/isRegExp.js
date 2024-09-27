@@ -1,7 +1,7 @@
 'use strict';
 
-var getTag = require('../_internal/getTag.js');
+var isRegExp$1 = require('../../predicate/isRegExp.js');
 function isRegExp(value) {
-  return getTag.getTag(value) === '[object RegExp]';
+  return isRegExp$1.isRegExp(value);
 }
 exports.isRegExp = isRegExp;

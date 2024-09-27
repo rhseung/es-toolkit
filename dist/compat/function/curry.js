@@ -18,69 +18,60 @@ function curry(func) {
     arity = 0;
   }
   var _wrapper = function wrapper() {
-    for (var _len = arguments.length, partials = new Array(_len), _key = 0; _key < _len; _key++) {
-      partials[_key] = arguments[_key];
+    for (var _len = arguments.length, partialArgs = new Array(_len), _key = 0; _key < _len; _key++) {
+      partialArgs[_key] = arguments[_key];
     }
-    var holders = replaceHolders(partials);
-    var length = partials.length - holders.length;
+    var holders = partialArgs.filter(function (item) {
+      return item === curry.placeholder;
+    });
+    var length = partialArgs.length - holders.length;
     if (length < arity) {
-      return makeCurry(func, holders, arity - length, partials);
+      return makeCurry(func, arity - length, partialArgs);
     }
     if (this instanceof _wrapper) {
-      return _construct(func, partials);
+      return _construct(func, partialArgs);
     }
-    return func.apply(this, partials);
+    return func.apply(this, partialArgs);
   };
   _wrapper.placeholder = curryPlaceholder;
   return _wrapper;
 }
-function makeCurry(func, holders, arity, partials) {
+function makeCurry(func, arity, partialArgs) {
   function wrapper() {
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
+    for (var _len2 = arguments.length, providedArgs = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      providedArgs[_key2] = arguments[_key2];
     }
-    var holdersCount = args.filter(function (item) {
+    var holders = providedArgs.filter(function (item) {
       return item === curry.placeholder;
-    }).length;
-    var length = args.length - holdersCount;
-    args = composeArgs(args, partials, holders);
+    });
+    var length = providedArgs.length - holders.length;
+    providedArgs = composeArgs(providedArgs, partialArgs);
     if (length < arity) {
-      var newHolders = replaceHolders(args);
-      return makeCurry(func, newHolders, arity - length, args);
+      return makeCurry(func, arity - length, providedArgs);
     }
     if (this instanceof wrapper) {
-      return _construct(func, _toConsumableArray(args));
+      return _construct(func, _toConsumableArray(providedArgs));
     }
-    return func.apply(this, args);
+    return func.apply(this, providedArgs);
   }
   wrapper.placeholder = curryPlaceholder;
   return wrapper;
 }
-function replaceHolders(args) {
-  var result = [];
-  for (var i = 0; i < args.length; i++) {
-    if (args[i] === curry.placeholder) {
-      result.push(i);
+function composeArgs(providedArgs, partialArgs) {
+  var args = [];
+  var startIndex = 0;
+  for (var i = 0; i < partialArgs.length; i++) {
+    var arg = partialArgs[i];
+    if (arg === curry.placeholder && startIndex < providedArgs.length) {
+      args.push(providedArgs[startIndex++]);
+    } else {
+      args.push(arg);
     }
   }
-  return result;
-}
-function composeArgs(args, partials, holders) {
-  var result = _toConsumableArray(partials);
-  var argsLength = args.length;
-  var holdersLength = holders.length;
-  var argsIndex = -1,
-    leftIndex = partials.length,
-    rangeLength = Math.max(argsLength - holdersLength, 0);
-  while (++argsIndex < holdersLength) {
-    if (argsIndex < argsLength) {
-      result[holders[argsIndex]] = args[argsIndex];
-    }
+  for (var _i = startIndex; _i < providedArgs.length; _i++) {
+    args.push(providedArgs[_i]);
   }
-  while (rangeLength--) {
-    result[leftIndex++] = args[argsIndex++];
-  }
-  return result;
+  return args;
 }
 var curryPlaceholder = Symbol('curry.placeholder');
 curry.placeholder = curryPlaceholder;

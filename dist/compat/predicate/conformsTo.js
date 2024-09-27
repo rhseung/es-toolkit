@@ -7,8 +7,9 @@ function conformsTo(target, source) {
   if (target == null) {
     return Object.keys(source).length === 0;
   }
-  for (var _i = 0, _Object$keys = Object.keys(source); _i < _Object$keys.length; _i++) {
-    var key = _Object$keys[_i];
+  var keys = Object.keys(source);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
     var predicate = source[key];
     var value = target[key];
     if (value === undefined && !(key in target) || !predicate(value)) {

@@ -13,3 +13,4 @@ export { partialRight } from './partialRight.mjs';
 export { rest } from './rest.mjs';
 export { curry } from './curry.mjs';
 export { spread } from './spread.mjs';
+export { flow } from './flow.mjs';

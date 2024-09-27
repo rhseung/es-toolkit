@@ -14,14 +14,14 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function pickBy(obj, shouldPick) {
   var result = {};
-  for (var _i = 0, _Object$entries = _objectEntries(obj); _i < _Object$entries.length; _i++) {
-    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-      key = _Object$entries$_i[0],
-      value = _Object$entries$_i[1];
-    if (!shouldPick(value, key)) {
-      continue;
+  var objEntries = _objectEntries(obj);
+  for (var i = 0; i < objEntries.length; i++) {
+    var _objEntries$i = _slicedToArray(objEntries[i], 2),
+      key = _objEntries$i[0],
+      value = _objEntries$i[1];
+    if (shouldPick(value, key)) {
+      result[key] = value;
     }
-    result[key] = value;
   }
   return result;
 }

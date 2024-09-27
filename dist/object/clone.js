@@ -7,7 +7,7 @@ function clone(obj) {
   if (isPrimitive.isPrimitive(obj)) {
     return obj;
   }
-  if (Array.isArray(obj) || isTypedArray.isTypedArray(obj) || obj instanceof ArrayBuffer || obj instanceof SharedArrayBuffer) {
+  if (Array.isArray(obj) || isTypedArray.isTypedArray(obj) || obj instanceof ArrayBuffer || typeof SharedArrayBuffer !== 'undefined' && obj instanceof SharedArrayBuffer) {
     return obj.slice(0);
   }
   var prototype = Object.getPrototypeOf(obj);

@@ -188,4 +188,14 @@ function rest(func, startIndex = func.length - 1) {
     };
 }
 
-export { after as a, before as b, negate as c, debounce as d, ary as e, partialRight as f, memoize as m, noop as n, once as o, partial as p, rest as r, unary as u };
+function flow(...funcs) {
+    return function (...args) {
+        let result = funcs.length ? funcs[0].apply(this, args) : args[0];
+        for (let i = 1; i < funcs.length; i++) {
+            result = funcs[i].call(this, result);
+        }
+        return result;
+    };
+}
+
+export { after as a, before as b, negate as c, debounce as d, ary as e, partialRight as f, flow as g, memoize as m, noop as n, once as o, partial as p, rest as r, unary as u };
