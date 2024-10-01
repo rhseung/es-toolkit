@@ -1,6 +1,8 @@
 # flow
 
-Creates a function that returns the result of invoking the given functions with the `this` binding of the created function, where each successive invocation is supplied the return value of the previous.
+Creates a new function that executes the given functions in sequence. The return value of the previous function is passed as an argument to the next function.
+
+The `this` context of the returned function is also passed to the functions provided as parameters.
 
 ## Signature
 
@@ -45,4 +47,22 @@ const square = (n: number) => n * n;
 
 const combined = flow(add, square);
 console.log(combined(1, 2)); // => 9
+```
+
+## Lodash Compatibility
+
+Import `flow` from `es-toolkit/compat` for full compatibility with lodash.
+
+- `flow` can accept both arrays of functions and individual functions as arguments.
+- `flow` will throw an error if any of the functions provided are not functions.
+
+```typescript
+import { flow } from 'es-toolkit/compat';
+
+const add = (x: number, y: number) => x + y;
+const square = (n: number) => n * n;
+const double = (n: number) => n * 2;
+
+const combined = flow([add, square], double);
+console.log(combined(1, 2)); // => 18
 ```

@@ -1,6 +1,8 @@
 # flow
 
-创建一个函数，该函数返回调用给定函数的结果，并将创建函数的 `this` 绑定传递给这些函数，每次调用时将上一次调用的返回值作为参数传递给下一次调用。
+创建一个新的函数，该函数按顺序执行给定的函数。上一个函数的返回值作为参数传递给下一个函数。
+
+返回的函数的 `this` 上下文也会传递给作为参数提供的函数。
 
 ## 签名
 
@@ -45,4 +47,22 @@ const square = (n: number) => n * n;
 
 const combined = flow(add, square);
 console.log(combined(1, 2)); // => 9
+```
+
+## Lodash 兼容性
+
+从 `es-toolkit/compat` 导入 `flow` 以获得与 lodash 的完全兼容性。
+
+- `flow` 可以接受函数数组和单个函数作为参数。
+- 如果提供的函数中有任何一个不是函数，`flow` 将抛出错误。
+
+```typescript
+import { flow } from 'es-toolkit/compat';
+
+const add = (x: number, y: number) => x + y;
+const square = (n: number) => n * n;
+const double = (n: number) => n * 2;
+
+const combined = flow([add, square], double);
+console.log(combined(1, 2)); // => 18
 ```

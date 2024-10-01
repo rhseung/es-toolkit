@@ -1,6 +1,6 @@
-import { isNil } from '../predicate/isNil.ts';
 import { get } from './get.ts';
 import { set } from './set.ts';
+import { isNil } from '../predicate/isNil.ts';
 
 /**
  * Creates a new object composed of the picked object properties.
@@ -116,7 +116,7 @@ export function pick<
     for (const key of keys) {
       const value = get(obj, key);
 
-      if (typeof key === 'string' && Object.prototype.hasOwnProperty.call(obj, key)) {
+      if (typeof key === 'string' && Object.hasOwn(obj, key)) {
         result[key] = value;
       } else {
         set(result, key, value);
