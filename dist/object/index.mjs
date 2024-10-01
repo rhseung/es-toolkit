@@ -1,5 +1,5 @@
-import { g as isObjectLike } from '../_chunk/toMerged-C8FQJD.mjs';
-export { c as clone, b as cloneDeep, f as flattenObject, i as invert, m as mapKeys, a as mapValues, d as merge, o as omitBy, p as pickBy, t as toMerged } from '../_chunk/toMerged-C8FQJD.mjs';
+import { g as isObjectLike } from '../_chunk/isObjectLike-DgbZpy.mjs';
+export { c as clone, b as cloneDeep, f as flattenObject, i as invert, m as mapKeys, a as mapValues, d as merge, o as omitBy, p as pickBy, t as toMerged } from '../_chunk/isObjectLike-DgbZpy.mjs';
 
 function omit(obj, keys) {
     const result = { ...obj };
@@ -14,7 +14,7 @@ function pick(obj, keys) {
     const result = {};
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        if (Object.hasOwn(obj, key)) {
             result[key] = obj[key];
         }
     }

@@ -1,10 +1,10 @@
 'use strict';
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var get = require('./get.js');
 var isDeepKey = require('../_internal/isDeepKey.js');
 var toKey = require('../_internal/toKey.js');
 var toPath = require('../util/toPath.js');
-var get = require('./get.js');
 function unset(obj, path) {
   if (obj == null) {
     return true;

@@ -2,8 +2,8 @@
 
 var isDeepKey = require('../_internal/isDeepKey.js');
 var isIndex = require('../_internal/isIndex.js');
-var toPath = require('../util/toPath.js');
 var isArguments = require('../predicate/isArguments.js');
+var toPath = require('../util/toPath.js');
 function has(object, path) {
   var resolvedPath;
   if (Array.isArray(path)) {
@@ -19,7 +19,7 @@ function has(object, path) {
   var current = object;
   for (var i = 0; i < resolvedPath.length; i++) {
     var key = resolvedPath[i];
-    if (current == null || !Object.prototype.hasOwnProperty.call(current, key)) {
+    if (current == null || !Object.hasOwn(current, key)) {
       var isSparseIndex = (Array.isArray(current) || isArguments.isArguments(current)) && isIndex.isIndex(key) && key < current.length;
       if (!isSparseIndex) {
         return false;

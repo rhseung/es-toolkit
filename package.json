@@ -173,11 +173,18 @@
   "sideEffects": false,
   "scripts": {
     "prepack": "yarn build",
-    "build": "rollup -c rollup.config.mjs && ./.scripts/postbuild.sh",
+    "build": "rollup -c rollup.config.mjs && python scripts/make_zip.py",
     "test": "vitest --coverage --typecheck",
     "bench": "vitest bench",
     "lint": "eslint --config eslint.config.mjs",
     "format": "prettier --write .",
     "transform": "jscodeshift -t ./.scripts/tests/transform-lodash-test.ts $0 && prettier --write $0"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-named-capturing-groups-regex": "^7.24.7",
+    "@babel/preset-env": "^7.25.4",
+    "@rollup/plugin-babel": "^6.0.4",
+    "babel-plugin-object-values-to-object-keys": "^1.0.2",
+    "babel-plugin-transform-es2017-object-entries": "^0.0.5"
   }
 }

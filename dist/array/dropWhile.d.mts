@@ -16,6 +16,6 @@
  * const result = dropWhile(array, x => x < 3);
  * // result will be [3, 4, 5] since elements less than 3 are dropped.
  */
-declare function dropWhile<T>(arr: readonly T[], canContinueDropping: (item: T) => boolean): T[];
+declare function dropWhile<T>(arr: readonly T[], canContinueDropping: (item: T, index: number, arr: readonly T[]) => boolean): T[];
 
 export { dropWhile };

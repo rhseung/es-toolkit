@@ -1,11 +1,11 @@
 'use strict';
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var isMatch = require('./isMatch.js');
 var toKey = require('../_internal/toKey.js');
 var cloneDeep = require('../object/cloneDeep.js');
 var get = require('../object/get.js');
 var has = require('../object/has.js');
-var isMatch = require('./isMatch.js');
 function matchesProperty(property, source) {
   switch (_typeof(property)) {
     case 'object':

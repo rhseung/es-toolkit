@@ -1,7 +1,7 @@
 'use strict';
 
-var cloneDeep = require('../../object/cloneDeep.js');
 var isMatch = require('./isMatch.js');
+var cloneDeep = require('../../object/cloneDeep.js');
 function matches(source) {
   source = cloneDeep.cloneDeep(source);
   return function (target) {

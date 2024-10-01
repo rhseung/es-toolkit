@@ -1,5 +1,5 @@
-import { d as debounce } from '../_chunk/flow-BNapRm.mjs';
-export { a as after, e as ary, b as before, g as flow, m as memoize, c as negate, n as noop, o as once, p as partial, f as partialRight, r as rest, u as unary } from '../_chunk/flow-BNapRm.mjs';
+import { d as debounce } from '../_chunk/flowRight-B6rz-c.mjs';
+export { a as after, e as ary, b as before, g as curryRight, h as flow, i as flowRight, m as memoize, c as negate, n as noop, o as once, p as partial, f as partialRight, r as rest, u as unary } from '../_chunk/flowRight-B6rz-c.mjs';
 
 function throttle(func, throttleMs, { signal, edges = ['leading', 'trailing'] } = {}) {
     let pendingAt = null;
@@ -10,6 +10,7 @@ function throttle(func, throttleMs, { signal, edges = ['leading', 'trailing'] } 
         }
         else {
             if (Date.now() - pendingAt >= throttleMs) {
+                pendingAt = Date.now();
                 debounced.cancel();
                 debounced(...args);
             }

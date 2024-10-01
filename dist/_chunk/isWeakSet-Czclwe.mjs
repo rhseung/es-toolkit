@@ -1,7 +1,22 @@
-import { i as isPlainObject } from './isPlainObject-CmlJbQ.mjs';
+import { i as isPlainObject } from './isPlainObject-D5pylh.mjs';
+
+function isArrayBuffer(value) {
+    return value instanceof ArrayBuffer;
+}
 
 function isDate(value) {
     return value instanceof Date;
+}
+
+function getSymbols(object) {
+    return Object.getOwnPropertySymbols(object).filter(symbol => Object.prototype.propertyIsEnumerable.call(object, symbol));
+}
+
+function getTag(value) {
+    if (value == null) {
+        return value === undefined ? '[object Undefined]' : '[object Null]';
+    }
+    return Object.prototype.toString.call(value);
 }
 
 const regexpTag = '[object RegExp]';
@@ -30,17 +45,6 @@ const int32ArrayTag = '[object Int32Array]';
 const bigInt64ArrayTag = '[object BigInt64Array]';
 const float32ArrayTag = '[object Float32Array]';
 const float64ArrayTag = '[object Float64Array]';
-
-function getSymbols(object) {
-    return Object.getOwnPropertySymbols(object).filter(symbol => Object.prototype.propertyIsEnumerable.call(object, symbol));
-}
-
-function getTag(value) {
-    if (value == null) {
-        return value === undefined ? '[object Undefined]' : '[object Null]';
-    }
-    return Object.prototype.toString.call(value);
-}
 
 function isEqual(a, b) {
     if (typeof a === typeof b) {
@@ -191,7 +195,7 @@ function areObjectsEqual(a, b, stack) {
                 for (let i = 0; i < aKeys.length; i++) {
                     const propKey = aKeys[i];
                     const aProp = a[propKey];
-                    if (!Object.prototype.hasOwnProperty.call(b, propKey)) {
+                    if (!Object.hasOwn(b, propKey)) {
                         return false;
                     }
                     const bProp = b[propKey];
@@ -244,6 +248,47 @@ function isRegExp(value) {
     return value instanceof RegExp;
 }
 
+function isJSONArray(value) {
+    if (!Array.isArray(value)) {
+        return false;
+    }
+    return value.every(item => isJSONValue(item));
+}
+
+function isJSONValue(value) {
+    switch (typeof value) {
+        case 'object': {
+            return value === null || isJSONArray(value) || isJSONObject(value);
+        }
+        case 'string':
+        case 'number':
+        case 'boolean': {
+            return true;
+        }
+        default: {
+            return false;
+        }
+    }
+}
+
+function isJSONObject(obj) {
+    if (!isPlainObject(obj)) {
+        return false;
+    }
+    const keys = Reflect.ownKeys(obj);
+    for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const value = obj[key];
+        if (typeof key !== 'string') {
+            return false;
+        }
+        if (!isJSONValue(value)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 function isSet(value) {
     return value instanceof Set;
 }
@@ -256,4 +301,4 @@ function isWeakSet(value) {
     return value instanceof WeakSet;
 }
 
-export { isEqual as a, isMap as b, isNil as c, isNotNil as d, isNull as e, isUndefined as f, isLength as g, isFunction as h, isDate as i, isRegExp as j, isSet as k, isWeakMap as l, isWeakSet as m, argumentsTag as n, booleanTag as o, numberTag as p, getTag as q, getSymbols as r, stringTag as s };
+export { isDate as a, isEqual as b, isMap as c, isNil as d, isNotNil as e, isNull as f, isUndefined as g, isLength as h, isArrayBuffer as i, isFunction as j, isRegExp as k, isJSONObject as l, isJSONValue as m, isJSONArray as n, isSet as o, isWeakMap as p, isWeakSet as q, argumentsTag as r, booleanTag as s, stringTag as t, numberTag as u, getTag as v, getSymbols as w };

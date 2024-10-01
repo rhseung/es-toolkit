@@ -1,23 +1,23 @@
 'use strict';
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function isPlainObject(object) {
-  if (_typeof(object) !== 'object') {
+function isPlainObject(value) {
+  if (_typeof(value) !== 'object') {
     return false;
   }
-  if (object == null) {
+  if (value == null) {
     return false;
   }
-  if (Object.getPrototypeOf(object) === null) {
+  if (Object.getPrototypeOf(value) === null) {
     return true;
   }
-  if (object.toString() !== '[object Object]') {
+  if (value.toString() !== '[object Object]') {
     return false;
   }
-  var proto = object;
+  var proto = value;
   while (Object.getPrototypeOf(proto) !== null) {
     proto = Object.getPrototypeOf(proto);
   }
-  return Object.getPrototypeOf(object) === proto;
+  return Object.getPrototypeOf(value) === proto;
 }
 exports.isPlainObject = isPlainObject;

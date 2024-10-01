@@ -4,9 +4,9 @@ function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var isNil = require('../predicate/isNil.js');
 var get = require('./get.js');
 var set = require('./set.js');
+var isNil = require('../predicate/isNil.js');
 function pick(obj) {
   if (isNil.isNil(obj)) {
     return {};
@@ -36,7 +36,7 @@ function pick(obj) {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var key = _step.value;
         var value = get.get(obj, key);
-        if (typeof key === 'string' && Object.prototype.hasOwnProperty.call(obj, key)) {
+        if (typeof key === 'string' && Object.hasOwn(obj, key)) {
           result[key] = value;
         } else {
           set.set(result, key, value);

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 import dtsPlugin from 'rollup-plugin-dts';
 import terserPlugin from '@rollup/plugin-terser';
 import tsPlugin from '@rollup/plugin-typescript';
@@ -63,7 +64,7 @@ export default () => {
  * }) => import('rollup').RollupOptions}
  */
 function libBuildOptions({ entrypoints, extension, format, outDir, sourcemap }) {
-  const isESM = format === 'esm';
+  const isCJS = format === 'cjs';
 
   return {
     input: mapInputs(entrypoints),
@@ -77,6 +78,18 @@ function libBuildOptions({ entrypoints, extension, format, outDir, sourcemap }) 
           declaration: false,
         },
       }),
+      ...(isCJS
+        ? [
+            getBabelOutputPlugin({
+              presets: ['@babel/preset-env'],
+              plugins: [
+                '@babel/plugin-transform-named-capturing-groups-regex',
+                'babel-plugin-object-values-to-object-keys',
+                'transform-es2017-object-entries',
+              ],
+            }),
+          ]
+        : []),
     ],
     output: {
       format,
@@ -84,9 +97,9 @@ function libBuildOptions({ entrypoints, extension, format, outDir, sourcemap }) 
       ...fileNames(extension),
       // Using preserveModules disables bundling and the creation of chunks,
       // leading to a result that is a mirror of the input module graph.
-      preserveModules: isESM,
+      preserveModules: isCJS,
       sourcemap,
-      generatedCode: 'es2015',
+      generatedCode: 'es5',
       // Hoisting transitive imports adds bare imports in modules,
       // which can make imports by JS runtimes slightly faster,
       // but makes the generated code harder to follow.
@@ -131,7 +144,7 @@ function browserBuildConfig({ inputFile, outFile, name, sourcemap }) {
       name,
       file: outFile,
       sourcemap,
-      generatedCode: 'es2015',
+      generatedCode: 'es5',
     },
   };
 }
@@ -147,7 +160,7 @@ function declarationOptions({ entrypoints, outDir }) {
       {
         format: 'esm',
         dir: outDir,
-        generatedCode: 'es2015',
+        generatedCode: 'es5',
         ...fileNames('d.mts'),
         preserveModules: true,
         preserveModulesRoot: 'src',
@@ -155,7 +168,7 @@ function declarationOptions({ entrypoints, outDir }) {
       {
         format: 'cjs',
         dir: outDir,
-        generatedCode: 'es2015',
+        generatedCode: 'es5',
         ...fileNames('d.ts'),
         preserveModules: true,
         preserveModulesRoot: 'src',

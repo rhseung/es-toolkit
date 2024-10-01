@@ -1,7 +1,7 @@
 'use strict';
 
-var trimStart = require('./trimStart.js');
 var trimEnd = require('./trimEnd.js');
+var trimStart = require('./trimStart.js');
 function trim(str, chars) {
   if (chars === undefined) {
     return str.trim();

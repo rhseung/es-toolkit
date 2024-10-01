@@ -1,3 +1,4 @@
+export { isArrayBuffer } from './isArrayBuffer.mjs';
 export { isDate } from './isDate.mjs';
 export { isEqual } from './isEqual.mjs';
 export { isError } from './isError.mjs';
@@ -15,6 +16,9 @@ export { isRegExp } from './isRegExp.mjs';
 export { isBoolean } from './isBoolean.mjs';
 export { isSymbol } from './isSymbol.mjs';
 export { isString } from './isString.mjs';
+export { isJSONObject } from './isJSONObject.mjs';
+export { isJSONValue } from './isJSONValue.mjs';
+export { isJSONArray } from './isJSONArray.mjs';
 export { isSet } from './isSet.mjs';
 export { isWeakMap } from './isWeakMap.mjs';
 export { isWeakSet } from './isWeakSet.mjs';

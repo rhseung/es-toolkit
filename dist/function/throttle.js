@@ -16,6 +16,7 @@ function throttle(func, throttleMs) {
       pendingAt = Date.now();
     } else {
       if (Date.now() - pendingAt >= throttleMs) {
+        pendingAt = Date.now();
         debounced.cancel();
         debounced.apply(void 0, arguments);
       }

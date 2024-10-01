@@ -27,10 +27,10 @@ function cloneDeepImpl(obj) {
     for (var i = 0; i < obj.length; i++) {
       result[i] = cloneDeepImpl(obj[i], stack);
     }
-    if (Object.prototype.hasOwnProperty.call(obj, 'index')) {
+    if (Object.hasOwn(obj, 'index')) {
       result.index = obj.index;
     }
-    if (Object.prototype.hasOwnProperty.call(obj, 'input')) {
+    if (Object.hasOwn(obj, 'input')) {
       result.input = obj.input;
     }
     return result;
@@ -94,7 +94,7 @@ function cloneDeepImpl(obj) {
     return obj.slice(0);
   }
   if (obj instanceof DataView) {
-    var _result5 = new DataView(obj.buffer.slice(0));
+    var _result5 = new DataView(obj.buffer.slice(0), obj.byteOffset, obj.byteLength);
     stack.set(obj, _result5);
     copyProperties(_result5, obj, stack);
     return _result5;

@@ -6,8 +6,8 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-var capitalize = require('./capitalize.js');
 var getWords = require('./_internal/getWords.js');
+var capitalize = require('./capitalize.js');
 function camelCase(str) {
   var words = getWords.getWords(str);
   if (words.length === 0) {

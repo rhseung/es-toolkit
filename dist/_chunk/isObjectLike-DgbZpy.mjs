@@ -1,4 +1,4 @@
-import { b as isPrimitive, a as isTypedArray, i as isPlainObject } from './isPlainObject-CmlJbQ.mjs';
+import { b as isPrimitive, a as isTypedArray, i as isPlainObject } from './isPlainObject-D5pylh.mjs';
 
 function omitBy(obj, shouldOmit) {
     const result = {};
@@ -139,10 +139,10 @@ function cloneDeepImpl(obj, stack = new Map()) {
         for (let i = 0; i < obj.length; i++) {
             result[i] = cloneDeepImpl(obj[i], stack);
         }
-        if (Object.prototype.hasOwnProperty.call(obj, 'index')) {
+        if (Object.hasOwn(obj, 'index')) {
             result.index = obj.index;
         }
-        if (Object.prototype.hasOwnProperty.call(obj, 'input')) {
+        if (Object.hasOwn(obj, 'input')) {
             result.input = obj.input;
         }
         return result;
@@ -186,7 +186,7 @@ function cloneDeepImpl(obj, stack = new Map()) {
         return obj.slice(0);
     }
     if (obj instanceof DataView) {
-        const result = new DataView(obj.buffer.slice(0));
+        const result = new DataView(obj.buffer.slice(0), obj.byteOffset, obj.byteLength);
         stack.set(obj, result);
         copyProperties(result, obj, stack);
         return result;
@@ -232,10 +232,6 @@ function copyProperties(target, source, stack) {
     }
 }
 
-function isObjectLike(value) {
-    return typeof value === 'object' && value !== null;
-}
-
 function merge(target, source) {
     const sourceKeys = Object.keys(source);
     for (let i = 0; i < sourceKeys.length; i++) {
@@ -243,10 +239,20 @@ function merge(target, source) {
         const sourceValue = source[key];
         const targetValue = target[key];
         if (Array.isArray(sourceValue)) {
-            target[key] = merge(targetValue ?? [], sourceValue);
+            if (Array.isArray(targetValue)) {
+                target[key] = merge(targetValue, sourceValue);
+            }
+            else {
+                target[key] = merge([], sourceValue);
+            }
         }
-        else if (isObjectLike(targetValue) && isObjectLike(sourceValue)) {
-            target[key] = merge(targetValue ?? {}, sourceValue);
+        else if (isPlainObject(sourceValue)) {
+            if (isPlainObject(targetValue)) {
+                target[key] = merge(targetValue, sourceValue);
+            }
+            else {
+                target[key] = merge({}, sourceValue);
+            }
         }
         else if (targetValue === undefined || sourceValue !== undefined) {
             target[key] = sourceValue;
@@ -257,6 +263,10 @@ function merge(target, source) {
 
 function toMerged(target, source) {
     return merge(cloneDeep(target), source);
+}
+
+function isObjectLike(value) {
+    return typeof value === 'object' && value !== null;
 }
 
 export { mapValues as a, cloneDeep as b, clone as c, merge as d, copyProperties as e, flattenObject as f, isObjectLike as g, invert as i, mapKeys as m, omitBy as o, pickBy as p, toMerged as t };

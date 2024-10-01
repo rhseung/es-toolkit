@@ -1,10 +1,10 @@
-function capitalize(str) {
-    return (str.charAt(0).toUpperCase() + str.slice(1).toLowerCase());
-}
-
-const CASE_SPLIT_PATTERN = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])|\p{Emoji_Presentation}|\p{Extended_Pictographic}|\p{L}+/gu;
+const CASE_SPLIT_PATTERN = /\p{Lu}?\p{Ll}+|[0-9]+|\p{Lu}+(?!\p{Ll})|\p{Emoji_Presentation}|\p{Extended_Pictographic}|\p{L}+/gu;
 function getWords(str) {
     return Array.from(str.match(CASE_SPLIT_PATTERN) ?? []);
+}
+
+function capitalize(str) {
+    return (str.charAt(0).toUpperCase() + str.slice(1).toLowerCase());
 }
 
 function camelCase(str) {
@@ -53,27 +53,6 @@ function constantCase(str) {
     return words.map(word => word.toUpperCase()).join('_');
 }
 
-function trimStart(str, chars) {
-    if (chars === undefined) {
-        return str.trimStart();
-    }
-    let startIndex = 0;
-    switch (typeof chars) {
-        case 'string': {
-            while (startIndex < str.length && str[startIndex] === chars) {
-                startIndex++;
-            }
-            break;
-        }
-        case 'object': {
-            while (startIndex < str.length && chars.includes(str[startIndex])) {
-                startIndex++;
-            }
-        }
-    }
-    return str.substring(startIndex);
-}
-
 function trimEnd(str, chars) {
     if (chars === undefined) {
         return str.trimEnd();
@@ -93,6 +72,27 @@ function trimEnd(str, chars) {
         }
     }
     return str.substring(0, endIndex);
+}
+
+function trimStart(str, chars) {
+    if (chars === undefined) {
+        return str.trimStart();
+    }
+    let startIndex = 0;
+    switch (typeof chars) {
+        case 'string': {
+            while (startIndex < str.length && str[startIndex] === chars) {
+                startIndex++;
+            }
+            break;
+        }
+        case 'object': {
+            while (startIndex < str.length && chars.includes(str[startIndex])) {
+                startIndex++;
+            }
+        }
+    }
+    return str.substring(startIndex);
 }
 
 function trim(str, chars) {

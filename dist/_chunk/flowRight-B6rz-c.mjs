@@ -188,6 +188,26 @@ function rest(func, startIndex = func.length - 1) {
     };
 }
 
+function curryRight(func) {
+    if (func.length === 0 || func.length === 1) {
+        return func;
+    }
+    return function (arg) {
+        return makeCurryRight(func, func.length, [arg]);
+    };
+}
+function makeCurryRight(origin, argsLength, args) {
+    if (args.length === argsLength) {
+        return origin(...args);
+    }
+    else {
+        const next = function (arg) {
+            return makeCurryRight(origin, argsLength, [arg, ...args]);
+        };
+        return next;
+    }
+}
+
 function flow(...funcs) {
     return function (...args) {
         let result = funcs.length ? funcs[0].apply(this, args) : args[0];
@@ -198,4 +218,8 @@ function flow(...funcs) {
     };
 }
 
-export { after as a, before as b, negate as c, debounce as d, ary as e, partialRight as f, flow as g, memoize as m, noop as n, once as o, partial as p, rest as r, unary as u };
+function flowRight(...funcs) {
+    return flow(...funcs.reverse());
+}
+
+export { after as a, before as b, negate as c, debounce as d, ary as e, partialRight as f, curryRight as g, flow as h, flowRight as i, memoize as m, noop as n, once as o, partial as p, rest as r, unary as u };

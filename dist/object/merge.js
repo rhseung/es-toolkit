@@ -1,6 +1,6 @@
 'use strict';
 
-var isObjectLike = require('../compat/predicate/isObjectLike.js');
+var isPlainObject = require('../predicate/isPlainObject.js');
 function merge(target, source) {
   var sourceKeys = Object.keys(source);
   for (var i = 0; i < sourceKeys.length; i++) {
@@ -8,9 +8,17 @@ function merge(target, source) {
     var sourceValue = source[key];
     var targetValue = target[key];
     if (Array.isArray(sourceValue)) {
-      target[key] = merge(targetValue !== null && targetValue !== void 0 ? targetValue : [], sourceValue);
-    } else if (isObjectLike.isObjectLike(targetValue) && isObjectLike.isObjectLike(sourceValue)) {
-      target[key] = merge(targetValue !== null && targetValue !== void 0 ? targetValue : {}, sourceValue);
+      if (Array.isArray(targetValue)) {
+        target[key] = merge(targetValue, sourceValue);
+      } else {
+        target[key] = merge([], sourceValue);
+      }
+    } else if (isPlainObject.isPlainObject(sourceValue)) {
+      if (isPlainObject.isPlainObject(targetValue)) {
+        target[key] = merge(targetValue, sourceValue);
+      } else {
+        target[key] = merge({}, sourceValue);
+      }
     } else if (targetValue === undefined || sourceValue !== undefined) {
       target[key] = sourceValue;
     }

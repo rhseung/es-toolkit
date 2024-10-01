@@ -12,10 +12,10 @@ function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var tags = require('../compat/_internal/tags.js');
+var isPlainObject = require('./isPlainObject.js');
 var getSymbols = require('../compat/_internal/getSymbols.js');
 var getTag = require('../compat/_internal/getTag.js');
-var isPlainObject = require('./isPlainObject.js');
+var tags = require('../compat/_internal/tags.js');
 function isEqual(a, b) {
   if (_typeof(a) === _typeof(b)) {
     switch (_typeof(a)) {
@@ -198,7 +198,7 @@ function areObjectsEqual(a, b, stack) {
           for (var _i2 = 0; _i2 < aKeys.length; _i2++) {
             var propKey = aKeys[_i2];
             var aProp = a[propKey];
-            if (!Object.prototype.hasOwnProperty.call(b, propKey)) {
+            if (!Object.hasOwn(b, propKey)) {
               return false;
             }
             var bProp = b[propKey];

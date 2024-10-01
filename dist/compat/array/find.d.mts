@@ -72,7 +72,7 @@ declare function find<T>(arr: readonly T[], propertyToCheck: string): T | undefi
  * const result = find(obj, (item) => item > 2);
  * console.log(result); // 3
  */
-declare function find<T extends Record<string, unknown>>(object: T, doesMatch: (item: T[keyof T], index: number, object: T) => unknown): T | undefined;
+declare function find<T extends Record<string, unknown>>(object: T, doesMatch: (item: T[keyof T], index: keyof T, object: T) => unknown): T | undefined;
 /**
  * Finds the first item in an object that matches the given partial value.
  *

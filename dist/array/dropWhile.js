@@ -1,8 +1,8 @@
 'use strict';
 
 function dropWhile(arr, canContinueDropping) {
-  var dropEndIndex = arr.findIndex(function (item) {
-    return !canContinueDropping(item);
+  var dropEndIndex = arr.findIndex(function (item, index, arr) {
+    return !canContinueDropping(item, index, arr);
   });
   if (dropEndIndex === -1) {
     return [];
